@@ -1,70 +1,55 @@
 body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #141e30, #243b55);
+  font-family: 'Segoe UI', sans-serif;
+  background: #0d1117;
   color: #ffffff;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
+  text-align: center;
+  padding: 30px;
 }
 
 .container {
-  max-width: 500px;
-  margin: 40px auto;
-  background: #1f2937;
+  max-width: 400px;
+  margin: auto;
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  text-align: center;
+  background: #161b22;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-input[type="text"] {
+input {
   width: 90%;
   padding: 10px;
-  border-radius: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
   border: none;
-  margin-bottom: 15px;
   font-size: 16px;
 }
 
 button {
-  background-color: #3b82f6;
-  color: white;
+  background: #00ffcc;
+  color: #000;
+  padding: 10px 25px;
   border: none;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #2563eb;
+  background: #00ccaa;
 }
 
-#result, #nftBadge, #leaderboard {
+#result {
   margin-top: 20px;
-  background: #374151;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: left;
+  font-size: 16px;
 }
 
 footer {
-  text-align: center;
-  padding: 15px;
+  margin-top: 50px;
   font-size: 14px;
-  color: #ccc;
+  color: #aaa;
 }
 
-a {
-  color: #60a5fa;
+footer a {
+  color: #00ffcc;
   text-decoration: none;
-}
-
-.hidden {
-  display: none;
 }
