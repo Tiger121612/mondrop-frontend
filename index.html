@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mondrop Airdrop Checker</title>
+  <title>Mondrop Eligibility Checker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>🌐 Mondrop - Monad Airdrop Eligibility Checker</h1>
-
-    <input type="text" id="walletInput" placeholder="Enter your Monad wallet address..." />
+    <h1>🪂 Mondrop Airdrop Checker</h1>
+    <p>Enter your Monad wallet address:</p>
+    <input type="text" id="walletAddress" placeholder="0x..." />
     <button onclick="checkEligibility()">Check Eligibility</button>
-
-    <div id="result" class="hidden"></div>
-    <div id="nftBadge" class="hidden"></div>
-    <div id="leaderboard" class="hidden"></div>
+    <div id="loading" style="display: none;">⏳ Checking...</div>
+    <div id="result"></div>
   </div>
 
   <footer>
-    Made with ❤️ by <a href="https://x.com/PrashantKu6350?t=mD4hkeE2LTi4yI9VvaAXzQ&s=09" target="_blank">@PrashantKu6350</a>
+    Made by <a href="https://x.com/PrashantKu6350" target="_blank">@PrashantKu6350</a>
   </footer>
 
   <script src="logic.js"></script>
