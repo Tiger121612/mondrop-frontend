@@ -1,28 +1,22 @@
-function formatEligibility(data) {
-  if (!data || data.error) {
-    return "❌ Error: Invalid response from server.";
-  }
+export function parseEligibility(data) {
+  if (!data) return '❌ Invalid or empty data.';
 
-  if (data.isSybil) {
-    return `🚫 Disqualified: Sybil behavior detected.
-Reason: Suspicious funding patterns, short activity duration, or matching known Sybil cluster.`;
-  }
+  let lines = [];
+  lines.push(`📍 Address: ${data.address}`);
+  lines.push(`🏆 Tier: ${data.tier}`);
+  lines.push(`🚫 Sybil: ${data.isSybil ? 'Yes ❌' : 'No ✅'}`);
+  lines.push(`📊 Txns: ${data.txCount}`);
+  lines.push(`🎨 NFTs: ${data.verifiedNFTs}`);
+  lines.push(`🔗 Soulbound NFT: ${data.sbtOwned ? '✅' : '❌'}`);
+  lines.push(`🧩 DApps Used: ${data.dappsUsed}`);
+  lines.push(`🧠 Unique Txns: ${data.uniqueTxns}`);
+  lines.push(`📅 Active Days: ${data.activeDays}`);
+  lines.push(`📆 Active Weeks: ${data.activeWeeks}`);
+  lines.push(`📈 Active Months: ${data.activeMonths}`);
+  lines.push(`🌐 Ethereum Txns: ${data.ethTxns}`);
+  lines.push(`📌 Created At: ${data.createdAt}`);
+  lines.push(`📍 First Seen: ${data.firstSeen}`);
+  lines.push(`🕒 Last Active: ${data.lastActive}`);
 
-  return `✅ Address: ${data.address}
-🎖 Tier: ${data.tier}
-📦 Total Transactions: ${data.txCount}
-🎨 Verified NFTs: ${data.verifiedNFTs}
-🔗 SBT Owned: ${data.sbtOwned ? "Yes" : "No"}
-🧩 dApps Used: ${data.dappsUsed}
-📍 Unique Txns: ${data.uniqueTxns}
-📅 Active Days: ${data.activeDays}
-🗓 Active Weeks: ${data.activeWeeks}
-📆 Active Months: ${data.activeMonths}
-🌐 ETH Mainnet Txns: ${data.ethTxns}
-
-🧠 First Seen: ${data.firstSeen}
-💡 Last Active: ${data.lastActive}
-🎉 Created At: ${data.createdAt}
-
-🌟 Eligibility: ✅ Congratulations! You are eligible for the ModDrop Airdrop.`;
+  return lines.join('\n');
 }
