@@ -1,39 +1,22 @@
 document.getElementById("checkBtn").addEventListener("click", async () => {
-  const address = document.getElementById("walletInput").value.trim();
+  const address = document.getElementById("walletAddress").value.trim();
+  const resultBox = document.getElementById("result");
+
+  resultBox.innerHTML = "Checking...";
 
   if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    alert("Please enter a valid wallet address");
+    resultBox.innerHTML = "<span style='color:red;'>Invalid address format.</span>";
     return;
   }
 
   try {
-    const res = await fetch(`https://mondrop-backend.vercel.app/api/check?address=${address}`);
-    const data = await res.json();
+    const response = await fetch(`https://mondrop-backend.vercel.app/api/check?address=${address}`);
+    if (!response.ok) throw new Error("API response not ok");
 
-    if (data.error) {
-      alert("Error: " + data.error);
-      return;
-    }
-
-    showResults(data);
+    const data = await response.json();
+    displayEligibility(data);
   } catch (err) {
-    console.error(err);
-    alert("Error fetching data");
+    console.error("Error fetching:", err);
+    resultBox.innerHTML = "<span style='color:red;'>Error fetching data. Please try again.</span>";
   }
 });
-
-function showResults(data) {
-  document.getElementById("result").classList.remove("hidden");
-
-  document.getElementById("tier").textContent = data.tier;
-  document.getElementById("sybil").textContent = data.isSybil ? "❌ Yes (Disqualified)" : "✅ No (Eligible)";
-  document.getElementById("txCount").textContent = data.txCount;
-  document.getElementById("nfts").textContent = data.verifiedNFTs;
-  document.getElementById("sbt").textContent = data.sbtOwned ? "✅ Yes" : "❌ No";
-  document.getElementById("dapps").textContent = data.dappsUsed;
-  document.getElementById("uniqueTxns").textContent = data.uniqueTxns;
-  document.getElementById("activeDays").textContent = data.activeDays;
-  document.getElementById("activeWeeks").textContent = data.activeWeeks;
-  document.getElementById("activeMonths").textContent = data.activeMonths;
-  document.getElementById("ethTxns").textContent = data.ethTxns;
-}
