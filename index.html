@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mondrop Eligibility Checker</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Mondrop Airdrop Checker</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div class="container">
-    <h1>🪂 Mondrop Airdrop Checker</h1>
-    <p>Enter your Monad wallet address:</p>
-    <input type="text" id="walletAddress" placeholder="0x..." />
-    <button onclick="checkEligibility()">Check Eligibility</button>
-    <div id="loading" style="display: none;">⏳ Checking...</div>
-    <div id="result"></div>
-  </div>
+    <h1>Mondrop Airdrop Checker</h1>
+    <p>Enter your Monad wallet address to check your eligibility</p>
 
-  <footer>
-    Made by <a href="https://x.com/PrashantKu6350" target="_blank">@PrashantKu6350</a>
-  </footer>
+    <input type="text" id="walletInput" placeholder="0x...">
+    <button id="checkBtn">Check Eligibility</button>
+
+    <div id="result" class="hidden">
+      <h2>Eligibility Result</h2>
+      <p><strong>Tier:</strong> <span id="tier"></span></p>
+      <p><strong>Sybil Check:</strong> <span id="sybil"></span></p>
+      <p><strong>Total Transactions:</strong> <span id="txCount"></span></p>
+      <p><strong>Verified NFTs:</strong> <span id="nfts"></span></p>
+      <p><strong>SBT Owned:</strong> <span id="sbt"></span></p>
+      <p><strong>dApps Used:</strong> <span id="dapps"></span></p>
+      <p><strong>Unique Transactions:</strong> <span id="uniqueTxns"></span></p>
+      <p><strong>Active Days:</strong> <span id="activeDays"></span></p>
+      <p><strong>Active Weeks:</strong> <span id="activeWeeks"></span></p>
+      <p><strong>Active Months:</strong> <span id="activeMonths"></span></p>
+      <p><strong>Ethereum Txns:</strong> <span id="ethTxns"></span></p>
+    </div>
+
+    <p class="footer">Made by <a href="https://x.com/PrashantKu6350" target="_blank">@PrashantKu6350</a></p>
+  </div>
 
   <script src="logic.js"></script>
   <script src="script.js"></script>
