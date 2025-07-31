@@ -1,38 +1,34 @@
-document.getElementById("checkBtn").addEventListener("click", async () => {
-  const address = document.getElementById("walletInput").value.trim();
+async function checkEligibility() {
+  const address = document.getElementById("walletAddress").value.trim();
   const resultDiv = document.getElementById("result");
+  const loading = document.getElementById("loading");
 
-  if (!address) {
-    resultDiv.innerHTML = "⚠️ Please enter a wallet address.";
+  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+    resultDiv.innerHTML = "❌ Invalid address format.";
     return;
   }
 
-  resultDiv.innerHTML = "⏳ Checking eligibility...";
+  resultDiv.innerHTML = "";
+  loading.style.display = "block";
 
   try {
     const response = await fetch(`https://mondrop-backend.vercel.app/api/check?address=${address}`);
     const data = await response.json();
+    loading.style.display = "none";
 
-    if (data.sybil) {
-      resultDiv.innerHTML = `
-        ❌ <b>Not eligible (Sybil Detected)</b><br/>
-        <i>Reason:</i> ${data.sybilReason || "Suspicious behavior detected."}
-      `;
+    if (data.error) {
+      resultDiv.innerHTML = "❌ " + data.error;
     } else {
       resultDiv.innerHTML = `
-        ✅ <b>${data.eligibility.tier} Eligible</b><br/>
-        <b>Rewards:</b> ${data.tokens} MON<br/>
-        <b>Bonus:</b> ${data.bonusReason || "No bonus"}<br/><br/>
-        <b>📊 Stats:</b><br/>
-        • Txns: ${data.stats.txCount}<br/>
-        • NFTs: ${data.stats.nftCount}<br/>
-        • DApps Used: ${data.stats.dappCount}<br/>
-        • Active Days: ${data.stats.activeDays}<br/>
-        • Weeks: ${data.stats.activeWeeks} | Months: ${data.stats.activeMonths}
+        ✅ <strong>${data.eligibility}</strong><br/>
+        Tier: ${data.tier}<br/>
+        Estimated Tokens: ${data.tokens}<br/>
+        Reason: ${data.reason}<br/>
+        ${data.sybil ? "⚠️ Sybil Suspected" : "✔️ No Sybil activity detected"}
       `;
     }
   } catch (err) {
-    console.error(err);
-    resultDiv.innerHTML = "❌ Error fetching data. Please try again later.";
+    loading.style.display = "none";
+    resultDiv.innerHTML = "❌ Error fetching data.";
   }
-});
+}
