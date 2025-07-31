@@ -1,27 +1,28 @@
-export function generateEligibilityHTML(data) {
-  if (!data || !data.tier) {
-    return `<p style="color: red;">Invalid data received from server.</p>`;
+function formatEligibility(data) {
+  if (!data || data.error) {
+    return "❌ Error: Invalid response from server.";
   }
 
-  let html = `
-    <h2>Eligibility Result</h2>
-    <p><strong>Wallet:</strong> ${data.address}</p>
-    <p><strong>Tier:</strong> ${data.tier}</p>
-    <p><strong>Sybil Suspect:</strong> ${data.isSybil ? 'Yes ❌' : 'No ✅'}</p>
-    <hr />
-    <p><strong>Total Transactions:</strong> ${data.txCount}</p>
-    <p><strong>Verified NFTs:</strong> ${data.verifiedNFTs}</p>
-    <p><strong>Owns SBT NFT:</strong> ${data.sbtOwned ? '✅ Yes' : '❌ No'}</p>
-    <p><strong>dApps Used:</strong> ${data.dappsUsed}</p>
-    <p><strong>Unique Transactions:</strong> ${data.uniqueTxns}</p>
-    <p><strong>Active Days:</strong> ${data.activeDays}</p>
-    <p><strong>Active Weeks:</strong> ${data.activeWeeks}</p>
-    <p><strong>Active Months:</strong> ${data.activeMonths}</p>
-    <p><strong>Ethereum Txns:</strong> ${data.ethTxns}</p>
-    <p><strong>Wallet Created At:</strong> ${data.createdAt}</p>
-    <p><strong>First Seen:</strong> ${data.firstSeen}</p>
-    <p><strong>Last Active:</strong> ${data.lastActive}</p>
-  `;
+  if (data.isSybil) {
+    return `🚫 Disqualified: Sybil behavior detected.
+Reason: Suspicious funding patterns, short activity duration, or matching known Sybil cluster.`;
+  }
 
-  return html;
+  return `✅ Address: ${data.address}
+🎖 Tier: ${data.tier}
+📦 Total Transactions: ${data.txCount}
+🎨 Verified NFTs: ${data.verifiedNFTs}
+🔗 SBT Owned: ${data.sbtOwned ? "Yes" : "No"}
+🧩 dApps Used: ${data.dappsUsed}
+📍 Unique Txns: ${data.uniqueTxns}
+📅 Active Days: ${data.activeDays}
+🗓 Active Weeks: ${data.activeWeeks}
+📆 Active Months: ${data.activeMonths}
+🌐 ETH Mainnet Txns: ${data.ethTxns}
+
+🧠 First Seen: ${data.firstSeen}
+💡 Last Active: ${data.lastActive}
+🎉 Created At: ${data.createdAt}
+
+🌟 Eligibility: ✅ Congratulations! You are eligible for the ModDrop Airdrop.`;
 }
