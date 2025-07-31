@@ -1,22 +1,29 @@
-document.getElementById("checkBtn").addEventListener("click", async () => {
-  const address = document.getElementById("walletInput").value.trim();
-  const resultDiv = document.getElementById("result");
-  resultDiv.classList.remove("hidden");
-  resultDiv.textContent = "⏳ Checking eligibility...";
+import { parseEligibility } from './logic.js';
 
-  if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
-    resultDiv.textContent = "❌ Invalid wallet address format.";
-    return;
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const button = document.getElementById('checkBtn');
+  const input = document.getElementById('walletInput');
+  const resultDiv = document.getElementById('result');
 
-  try {
-    const res = await fetch(`https://mondrop-backend.vercel.app/api/check?address=${address}`);
-    const data = await res.json();
+  button.addEventListener('click', async () => {
+    const address = input.value.trim();
+    if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+      resultDiv.textContent = '❌ Invalid wallet address.';
+      return;
+    }
 
-    const output = formatEligibility(data);
-    resultDiv.textContent = output;
-  } catch (err) {
-    resultDiv.textContent = "❌ Error fetching data. Please try again.";
-    console.error("Fetch error:", err);
-  }
+    resultDiv.textContent = '⏳ Checking eligibility...';
+
+    try {
+      const res = await fetch(`https://mondrop-backend.vercel.app/api/check?address=${address}`);
+      if (!res.ok) throw new Error('API failed');
+      const data = await res.json();
+
+      const message = parseEligibility(data);
+      resultDiv.textContent = message;
+    } catch (err) {
+      console.error('Fetch error:', err);
+      resultDiv.textContent = '❌ Error fetching data. Please try again.';
+    }
+  });
 });
